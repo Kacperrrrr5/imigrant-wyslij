@@ -4,6 +4,12 @@ let delayCounter = 0; // Licznik do opóźnień
 let showMessageCounter = 0; // Licznik do wyświetlenia wiadomości
 let showMessage = false; // Flaga do kontrolowania wyświetlania wiadomości
 let headImage;
+let buttonWidth = 210;
+let buttonHeight = 50;
+let buttonY;
+let margin = 20;
+let button1X;
+let button2X;
 
 function preload() {
   headImage = loadImage('PASEK5.png'); // Adjust the path if necessary
@@ -14,11 +20,25 @@ function setup() {
   frameRate(30); // Ustawienie szybkości klatek
   angleMode(DEGREES); // Ustawienie trybu kąta na stopnie
   background(255); // Białe tło
+  
+  buttonY = 1010;
+  button1X = width - 330;
+  button2X = width - 230;
 }
 
 function draw() {
   background(255);
   image(headImage, 0, 0, 1920, 220);
+  
+  if (showMessage) {
+    drawButton(button2X, buttonY, buttonWidth, buttonHeight, "Zacznij od początku", '#E30613');
+  }
+  
+  fill(0);
+  textStyle(BOLDITALIC);
+  textSize(30);
+  textAlign(CENTER, CENTER);
+  text("Zapisywanie formularza", width/2, 300);
   
   // Aktualizacja postępu z opóźnieniami na 45%, 62% i 87%
   if (progress < 99) {
@@ -37,7 +57,7 @@ function draw() {
       showMessage = true;
     }
   }
-
+  
   // Rysowanie paska postępu
   drawProgressBar(progress);
 
@@ -48,6 +68,31 @@ function draw() {
   if (showMessage) {
     drawErrorMessage();
   }
+}
+
+function mousePressed() {
+  if (showMessage && isMouseOver(button2X, buttonY, buttonWidth, buttonHeight)) {
+    window.open('https://kacperrrrr5.github.io/imigrant-witamy/', '_self');
+  }
+}
+
+function drawButton(x, y, w, h, label, baseColor) {
+  let hoverColor = lerpColor(color(baseColor), color(0), 0.2);
+  if (isMouseOver(x, y, w, h)) {
+    fill(hoverColor);
+  } else {
+    fill(baseColor);
+  }
+  noStroke();
+  rect(x, y, w, h);
+  fill(255);
+  textSize(20);
+  textAlign(CENTER, CENTER);
+  text(label, x + w / 2, y + h / 2);
+}
+
+function isMouseOver(x, y, w, h) {
+  return mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h;
 }
 
 function drawProgressBar(progress) {
@@ -109,5 +154,5 @@ function drawErrorMessage() {
   textSize(20); // Rozmiar tekstu
   textStyle(NORMAL); // Styl tekstu
   textAlign(CENTER, CENTER);
-  text("Nie udało nam się zapisać twojego wniosku.", width / 2, height / 2 + 200); // Umieszczenie tekstu niżej
+  text("Nie udało nam się zapisać twojego formularza.", width / 2, height / 2 + 200); // Umieszczenie tekstu niżej
 }
