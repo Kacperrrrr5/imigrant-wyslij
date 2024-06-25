@@ -72,7 +72,7 @@ function draw() {
 
 function mousePressed() {
   if (showMessage && isMouseOver(button2X, buttonY, buttonWidth, buttonHeight)) {
-    window.open('https://kacperrrrr5.github.io/imigrant-witamy/', '_self');
+    window.open('https://activistgames.github.io/startingPoints/', '_self');
   }
 }
 
